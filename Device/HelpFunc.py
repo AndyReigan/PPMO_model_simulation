@@ -38,8 +38,13 @@ class HelMethod:
         id.z = z
         return id
 
-
+# test
 id = initialNavData(x=10, y=11, z=1)
 a = HelMethod(id)
 m = a.cartToCircl()
 print(m.lat, m.lon, m.z)
+
+id1=initialNavData(lat=0.8,lon=3,height=100)
+m2=HelMethod(id1)
+m3=m2.geoToCart()
+print(m3.x,m3.y,m3.z)
