@@ -1,0 +1,16 @@
+DC3
+    FI_RollANG         on
+    HRa                on
+    Habs               on
+    MHel               on
+    T                  on
+    Vi                 on
+
+MFI
+    Gam                on
+    T_ISA              on
+    Theta_critND       on
+    Theta_critPup      on
+    V_max              on
+    V_max_AR           on
+    V_min              on
