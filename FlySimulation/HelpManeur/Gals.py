@@ -3,10 +3,10 @@ import _sqlite3
 
 
 class Gals:
-    def __init__(self, lp, bp, angleRot, rotate, dist):
+    def __init__(self, lp, bp, angle_rot, rotate, dist):
         self.lp = lp
         self.bp = bp
-        self.angleRot = angleRot
+        self.angle_rot = angle_rot
         self.rotate = rotate
         self.dist = dist
 
@@ -15,9 +15,11 @@ class Gals:
 
         lp = self.lp
         bp = self.bp
-        angleRot = self.angleRot
+        angle_rot = self.angle_rot
         rotate = self.rotate
         dist = self.dist
+
+
 
         return A
 
