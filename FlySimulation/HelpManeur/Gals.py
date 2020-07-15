@@ -21,7 +21,7 @@ class Gals:
         bp = self.bp
         rotate = self.rotate
         dist = self.dist
-
+        angle_rot = self.angle_rot
         # количество галсов для зоны покрытия поиска
         n = bp // dist
         if bp - n * dist > dist / 2:
@@ -30,9 +30,9 @@ class Gals:
         k = n + 2  # общее число ППМ
         # инициализируем необходимые нам точки
         a0_point = HelpMethod(self.id)
-        angle_rot = a0_point.azimut
-        b0_point = a0_point.direct_task_sphere()
 
+        b0_point = a0_point.direct_task_sphere()
+        b0_point = HelpMethod(b0_point)
         if rotate == "Left":
             angle_rot + math.pi / 2
         elif rotate == "Right":
@@ -41,11 +41,12 @@ class Gals:
         b0_point.azimut = angle_rot
         i = 0
         while i <= k // 2:
-            point_id1 = initialNavData()
-            point_id2 = initialNavData()
             a0_point.dist = i * dist
-            current_point = a0_point.direct_task_sphere()
-
+            b0_point.dist = i * dist
+            current_point1 = a0_point.direct_task_sphere()
+            A.append(current_point1)
+            current_point2 = b0_point.direct_task_sphere()
+            A.append(current_point2)
         return A
 
     def save(self):
@@ -55,3 +56,10 @@ class Gals:
     def plot(self):
         # generate plot
         pass
+
+
+m = initialNavData(lat=0.5, lon=0.7, azimut=0.7, dist=100)
+a = Gals(lp=100, bp=1000, id=m)
+diction=a.get()
+
+print(diction)
