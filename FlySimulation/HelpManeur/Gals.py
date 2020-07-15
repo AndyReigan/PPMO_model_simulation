@@ -2,6 +2,8 @@ import math
 import _sqlite3
 from Device.HelpFunc import HelpMethod
 from Structure.TrajectoryStruct import initialNavData
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Gals:
@@ -49,20 +51,29 @@ class Gals:
             A.append(current_point1)
             current_point2 = b0_point.direct_task_sphere()
             A.append(current_point2)
-            i = i+1
+            i = i + 1
         return A
 
     def save(self):
         # save object to sql DB
+
         pass
 
-    def plot(self):
+    def plot(A):
         # generate plot
         pass
+        point = A
+        x=np.zeros(len(point))
+        y=np.zeros(len(point))
+        for i in range(0,len(point)):
+            x[i]=point[i].lat
+            y[i]=point[i].lon
 
+        plt.plot(x,y)
+        plt.show()
 
 m = initialNavData(lat=0.5, lon=0.7, azimut=0.7, dist=100, status1='Left')
 a = Gals(lp=1000, bp=100000, id=m)
 diction = a.get()
-
+Gals.plot(diction)
 print(diction)
