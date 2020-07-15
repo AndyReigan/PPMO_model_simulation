@@ -22,7 +22,7 @@ class HelMethod:
         z = self.z
         lat = math.atan2(y, x)
         lon = math.atan2(math.sqrt(x * x + y * y), z)
-        id=initialNavData()
+        id = initialNavData()
         id.lat = lat
         id.lon = lon
         return id
@@ -34,7 +34,7 @@ class HelMethod:
         x = (self.r + h) * math.sin(lat) * math.cos(lon)
         y = (self.r + h) * math.sin(lat) * math.sin(lon)
         z = (self.r + h) * math.cos(lon)
-        id=initialNavData()
+        id = initialNavData()
         id.x = x
         id.y = y
         id.z = z
@@ -67,6 +67,17 @@ class HelMethod:
         lat_x = math.atan2(a, b)
         return lat_x
 
+    @staticmethod
+    def inverse_task_sphere(self1, self2):
+        phi1 = self1.lat
+        lambda1 = self1.lon
+        phi2 = self2.lat
+        lambda2 = self2.lon
+        id = initialNavData()
+        id.dist = math.acos(math.sin(phi1) * math.sin(phi2) + math.cos(phi1) *
+                            math.cos(phi2) * math.cos(lambda2 - lambda1))
+        return id
+
 
 # test
 id1 = initialNavData(x=10, y=11, z=1)
@@ -79,7 +90,13 @@ m2 = HelMethod(id2)
 m3 = m2.geoToCart()
 print(m3.x, m3.y, m3.z)
 
-id3=initialNavData(lat=0.1,lon=1,dist=100,azimut=0.5)
-m4=HelMethod(id3)
-m5=m4.direct_task_sphere()
-print(m5.lon,m5.lat)
+id3 = initialNavData(lat=0.1, lon=1, dist=100, azimut=0.5)
+m4 = HelMethod(id3)
+m5 = m4.direct_task_sphere()
+print(m5.lon, m5.lat)
+
+id4 = initialNavData(lat=0.1, lon=1)
+id5 = initialNavData(lat=0.2, lon=1)
+m6 = HelMethod(id4)
+m67 = m6.inverse_task_sphere(id4, id5)
+print(m67.dist)
