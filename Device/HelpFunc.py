@@ -22,7 +22,7 @@ class HelMethod:
         z = self.z
         lat = math.atan2(y, x)
         lon = math.atan2(math.sqrt(x * x + y * y), z)
-
+        id=initialNavData()
         id.lat = lat
         id.lon = lon
         return id
@@ -34,7 +34,7 @@ class HelMethod:
         x = (self.r + h) * math.sin(lat) * math.cos(lon)
         y = (self.r + h) * math.sin(lat) * math.sin(lon)
         z = (self.r + h) * math.cos(lon)
-
+        id=initialNavData()
         id.x = x
         id.y = y
         id.z = z
@@ -44,14 +44,18 @@ class HelMethod:
         azimut = self.azimut
         lat0 = self.lat
         lon0 = self.lon
+        dist = self.dist
 
-        # добавить
-        lat1 = None
-        lon1 = None
+        lat1 = math.asin(math.sin(lat0) * math.cos(dist) + math.cos(lat0) * math.sin(dist) * math.cos(azimut))
+
+        lon1 = math.atan2(math.sin(azimut) * math.sin(dist),
+                          math.cos(dist) * math.cos(lat0) - math.sin(dist) * math.sin(lat0) * math.cos(
+                              azimut)) + lon0
 
         id1 = initialNavData()
         id1.lat = lat1
         id1.lon = lon1
+
         return id1
 
     @staticmethod
@@ -74,3 +78,8 @@ id2 = initialNavData(lat=0.8, lon=3, height=100)
 m2 = HelMethod(id2)
 m3 = m2.geoToCart()
 print(m3.x, m3.y, m3.z)
+
+id3=initialNavData(lat=0.1,lon=1,dist=100,azimut=0.5)
+m4=HelMethod(id3)
+m5=m4.direct_task_sphere()
+print(m5.lon,m5.lat)

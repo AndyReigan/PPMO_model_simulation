@@ -1,6 +1,6 @@
 class initialNavData:
     def __init__(self, x=None, y=None, z=None, lat=None, lon=None, wind=None, speed=None, course=None, windDir=None,
-                 height=None, azimut=None,dist=None):
+                 height=None, azimut=None, dist=None):
         # в зависимости от необходимости используются либо те
         # либо иные координаты!!!
         self.x = x
@@ -14,7 +14,7 @@ class initialNavData:
         self.windDir = windDir
         self.height = height
         self.azimut = azimut
-        self.dist=dist
+        self.dist = dist
 
 
 class Angle:
