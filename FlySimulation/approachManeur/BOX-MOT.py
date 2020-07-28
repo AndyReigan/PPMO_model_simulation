@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Structure.TrajectoryStruct import initialNavData
 
 class BoxMot:

@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
+import os
 import math
 import _sqlite3
 from Device.HelpFunc import HelpMethod
 from Structure.TrajectoryStruct import initialNavData
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 class Gals:
     def __init__(self, lp, bp, id):
@@ -44,7 +45,7 @@ class Gals:
         a0_point.azimut = angle_rot
         b0_point.azimut = angle_rot
         i = 1
-        while i <= k // 2:
+        while i <= k:
             a0_point.dist = i * dist
             b0_point.dist = i * dist
             current_point1 = a0_point.direct_task_sphere()
@@ -62,18 +63,19 @@ class Gals:
     def plot(A):
         # generate plot
         pass
-        point = A
-        x=np.zeros(len(point))
-        y=np.zeros(len(point))
-        for i in range(0,len(point)):
-            x[i]=point[i].lat
-            y[i]=point[i].lon
+
+        x=np.zeros(len(A))
+        y=np.zeros(len(A))
+        for i in range(0,len(A)):
+            x[i]=A[i].lat
+            y[i]=A[i].lon
 
         plt.plot(x,y)
         plt.show()
 
-m = initialNavData(lat=0.5, lon=0.7, azimut=0.7, dist=100, status1='Left')
-a = Gals(lp=1000, bp=100000, id=m)
+m = initialNavData(lat=0.6, lon=0.7, azimut=0.7, dist=50/(6343*math.pi/2), status1='Left')
+a = Gals(lp=1000/(6343*math.pi/2), bp=100000/(6343*math.pi/2), id=m)
 diction = a.get()
 Gals.plot(diction)
 print(diction)
+
