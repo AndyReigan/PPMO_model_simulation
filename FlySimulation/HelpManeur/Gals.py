@@ -6,7 +6,8 @@ from Device.HelpFunc import HelpMethod
 from Structure.TrajectoryStruct import initialNavData
 import numpy as np
 import matplotlib.pyplot as plt
-# from basemap import Basemap
+from mpl_toolkits.basemap import Basemap
+
 
 class Gals:
     def __init__(self, lp, bp, dist, rotate, id):
@@ -53,7 +54,6 @@ class Gals:
             current_point1 = a0_point.direct_task_sphere()
             current_point2 = b0_point.direct_task_sphere()
 
-
             if i % 2 != 0:
                 current_point1.status1 = 'A' + str(i)
                 A.append(current_point1)
@@ -75,7 +75,6 @@ class Gals:
 
     def plot(A):
         # generate plot
-        pass
 
         x = np.zeros(len(A))
         y = np.zeros(len(A))
@@ -90,10 +89,32 @@ class Gals:
             plt.text(x[i], y[i], name[i])
         plt.show()
 
+    def plotOnMap(A):
+        x = np.zeros(len(A))
+        y = np.zeros(len(A))
+        name = []
+        for i in range(0, len(A)):
+            x[i] = HelpMethod.radTodeg(A[i].lat)
+            y[i] = HelpMethod.radTodeg(A[i].lon)
+            name.append(A[i].status1)
+        fig = plt.figure()
+
+        m = Basemap(llcrnrlat=y[0] - 10, llcrnrlon=x[0] - 10, urcrnrlat=y[len(x) - 1] + 20,
+                    urcrnrlon=x[len(y) - 1] + 20)
+        for i in range(1, len(x)):
+            m.drawgreatcircle(x[i - 1], y[i - 1], x[i], y[i], color="red")
+            i = +2
+        m.drawcoastlines()
+        m.fillcontinents()
+        for i in range(0, len(x)):
+            plt.text(x[i], y[i], name[i])
+
+        plt.show()
+
 
 m = initialNavData(lat=0.6, lon=0.72, azimut=0.2)
 a = Gals(lp=1000 / (6343 * math.pi / 2), bp=1000 / (6343 * math.pi / 2), dist=200 / (6343 * math.pi / 2), rotate='Left',
          id=m)
 diction = a.get()
-Gals.plot(diction)
+Gals.plotOnMap(diction)
 print(diction)

@@ -17,6 +17,10 @@ class HelpMethod:
         self.azimut = id.azimut
         self.dist = id.dist
 
+    @staticmethod
+    def radTodeg(rad):
+        return rad * 180 / math.pi
+
     def cartToCircl(self):
         x = self.x
         y = self.y
@@ -78,7 +82,6 @@ class HelpMethod:
         id.dist = math.acos(math.sin(phi1) * math.sin(phi2) + math.cos(phi1) *
                             math.cos(phi2) * math.cos(lambda2 - lambda1))
         return id
-
 
 #  обкатка примеров использования функции и их работоспособность
 # id1 = initialNavData(x=10, y=11, z=1)
