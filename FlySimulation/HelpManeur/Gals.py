@@ -98,22 +98,28 @@ class Gals:
             y[i] = HelpMethod.radTodeg(A[i].lon)
             name.append(A[i].status1)
         fig = plt.figure()
-
-        m = Basemap(llcrnrlat=y[0] - 10, llcrnrlon=x[0] - 10, urcrnrlat=y[len(x) - 1] + 20,
-                    urcrnrlon=x[len(y) - 1] + 20)
+        llcrnrlat=y[0] - 10
+        llcrnrlon = x[0] - 10
+        urcrnrlat = y[len(x) - 1] + 20
+        urcrnrlon = x[len(y) - 1] + 20
+        m = Basemap(llcrnrlat=llcrnrlat, llcrnrlon=llcrnrlon, urcrnrlat=urcrnrlat,
+                    urcrnrlon=urcrnrlon)
         for i in range(1, len(x)):
             m.drawgreatcircle(x[i - 1], y[i - 1], x[i], y[i], color="red")
             i = +2
         m.drawcoastlines()
         m.fillcontinents()
+        m.drawparallels(np.arange(0, 90, 10), labels=[1, 1, 0, 1])
+        # draw meridians
+        m.drawmeridians(np.arange(-180, 180, 10), labels=[1, 1, 0, 1])
         for i in range(0, len(x)):
             plt.text(x[i], y[i], name[i])
 
         plt.show()
 
 
-m = initialNavData(lat=0.6, lon=0.72, azimut=0.2)
-a = Gals(lp=1000 / (6343 * math.pi / 2), bp=1000 / (6343 * math.pi / 2), dist=200 / (6343 * math.pi / 2), rotate='Left',
+m = initialNavData(lat=0.4, lon=0.3, azimut=0.2)
+a = Gals(lp=2000 / (6343 * math.pi / 2), bp=3000 / (6343 * math.pi / 2), dist=200 / (6343 * math.pi / 2), rotate='Left',
          id=m)
 diction = a.get()
 Gals.plotOnMap(diction)
