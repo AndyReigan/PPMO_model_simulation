@@ -7,7 +7,8 @@ from Structure.TrajectoryStruct import initialNavData
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
-
+from time import gmtime, strftime
+import sys
 
 class Gals:
     def __init__(self, lp, bp, dist, rotate, id):
@@ -68,10 +69,21 @@ class Gals:
             i = i + 1
         return A
 
-    def save(self):
+    def saveInDb(self):
         # save object to sql DB
-
+        f=open('CurrentManeur','w')
         pass
+
+    def saveInFile(A,A1):
+        # save object to sql DB
+        f=open(A1,'w')
+
+        for i in range(0,len(A)):
+            if i == 0:
+                f.write('Id ' + ' lat' + '    lon'+'\n')
+            f.write(A[i].status1+' '+str(round(A[i].lat,4))+' '+str(round(A[i].lon,4))+'\n')
+        f.close()
+        # pass
 
     def plot(A):
         # generate plot
@@ -87,9 +99,9 @@ class Gals:
         plt.plot(x, y)
         for i in range(0, len(x)):
             plt.text(x[i], y[i], name[i])
-        plt.show()
+        # plt.show()
 
-    def plotOnMap(A):
+    def plotOnMap(A,A1):
         x = np.zeros(len(A))
         y = np.zeros(len(A))
         name = []
@@ -115,12 +127,18 @@ class Gals:
         for i in range(0, len(x)):
             plt.text(x[i], y[i], name[i])
 
-        plt.show()
+
+        plt.savefig(A1)
+        plt.close(fig)
 
 
 m = initialNavData(lat=0.4, lon=0.3, azimut=0.2)
 a = Gals(lp=2000 / (6343 * math.pi / 2), bp=3000 / (6343 * math.pi / 2), dist=200 / (6343 * math.pi / 2), rotate='Left',
          id=m)
 diction = a.get()
-Gals.plotOnMap(diction)
-print(diction)
+A=strftime("%Y-%m-%d %H:%M:%S", gmtime())
+Gals.plotOnMap(diction,A)
+Gals.saveInFile(diction,A)
+
+
+sys.exit()
