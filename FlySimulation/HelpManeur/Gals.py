@@ -140,5 +140,5 @@ A=strftime("%Y-%m-%d %H:%M:%S", gmtime())
 Gals.plotOnMap(diction,A)
 Gals.saveInFile(diction,A)
 
-
+print("m")
 sys.exit()
